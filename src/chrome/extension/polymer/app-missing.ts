@@ -4,7 +4,7 @@
 // Launch the Chrome webstore page for the uProxy app,
 // or activate the user's tab open to uproxy.org/install
 function openDownloadAppPage() : void {
-  chrome.tabs.query({}, function (tabs) {
+  chrome.tabs.query({}, (tabs) => {
     for (var i = 0; i < tabs.length; i++) {
       var url = tabs[i].url;
       if (url.indexOf('uproxysite.appspot.com/install') > 1 ||
@@ -32,10 +32,10 @@ function openDownloadAppPage() : void {
 }
 
 Polymer({
-  downloadApp: function() {
+  downloadApp: () => {
     openDownloadAppPage();
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
   }
 });

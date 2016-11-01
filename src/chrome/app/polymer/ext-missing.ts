@@ -1,7 +1,7 @@
 /// <reference path='../../../../third_party/polymer/polymer.d.ts' />
 
 Polymer({
-  downloadExt: function() {
+  downloadExt: () => {
     window.open('http://www.uproxy.org/install');
   }
 });

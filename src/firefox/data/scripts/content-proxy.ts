@@ -7,7 +7,7 @@ interface Window {
 // the core and UI, and forwards them to pages with this content script
 // loaded.
 //TODO add better typing for message
-self.port.on('message', function(message :any) {
+self.port.on('message', (message :any) => {
   if (message.logs) {
     window.postMessage({ logs : message.data, data: false }, '*');
   }
@@ -16,7 +16,7 @@ self.port.on('message', function(message :any) {
 
 // Listen for messages from pages where the content script is injected
 // (e.g. disconnected.js)
-window.addEventListener('message', function(event) {
+window.addEventListener('message', (event) => {
   if (event.data.update) {
     self.port.emit('update', event.data);
   }

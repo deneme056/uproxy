@@ -148,7 +148,7 @@ export default class ChromeBrowserApi implements BrowserAPI {
     *                    to the extension URL.
     */
   public launchTabIfNotOpen = (relativeUrl :string) => {
-    chrome.tabs.query({currentWindow: true}, function(tabs){
+    chrome.tabs.query({currentWindow: true}, (tabs) => {
       for (var i = 0; i < tabs.length; i++) {
         if (tabs[i].url == chrome.extension.getURL(relativeUrl)) {
           chrome.tabs.update(tabs[i].id, {url: '../' + relativeUrl, active: true});
@@ -204,7 +204,7 @@ export default class ChromeBrowserApi implements BrowserAPI {
     notification.onclick = () => {
       this.emit('notificationClicked', tag);
     };
-    setTimeout(function() {
+    setTimeout(() => {
       notification.close();
     }, 5000);
   }

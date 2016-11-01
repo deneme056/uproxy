@@ -9,6 +9,10 @@
       true,
       "spaces"
     ],
-    "no-trailing-whitespace": true
+    "no-trailing-whitespace": true,
+    "only-arrow-functions": [
+      true,
+      "allow-declarations"
+    ]
   }
 }

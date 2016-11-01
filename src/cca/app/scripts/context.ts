@@ -24,13 +24,13 @@ chrome.runtime.getBackgroundPage((bgPage) => {
   var link = document.createElement('link');
   link.rel = 'import';
   link.href = 'generic_ui/polymer/vulcanized.html'
-  link.onload = function(e) {
+  link.onload = (e) => {
     // Setting document.body.innerHTML is forbidden, because CCA uses
     // an <iframe> in this page to represent the background page.
     var root = document.createElement('uproxy-root');
     document.body.appendChild(root);
   };
-  link.onerror = function(e) {
+  link.onerror = (e) => {
     console.log('Error while loading polymer/vulcanized.html:', e);
   };
   document.head.appendChild(link);

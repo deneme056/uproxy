@@ -74,12 +74,11 @@ export default class ChromeUIConnector {
     // is complete.
     chrome.app.runtime.onLaunched.removeListener(this.launchInstallIncompletePage_);
     chrome.app.runtime.onLaunched.addListener(this.launchUproxy_);
-    this.extPort_.onDisconnect.addListener(function(){
-      // If the extension disconnects, we should show an error
-      // page.
+    this.extPort_.onDisconnect.addListener(() => {
+      // If the extension disconnects, we should show an error page.
       chrome.app.runtime.onLaunched.removeListener(this.launchUproxy_);
       chrome.app.runtime.onLaunched.addListener(this.launchInstallIncompletePage_);
-    }.bind(this));
+    });
   }
 
   // Receive a message from the extension.

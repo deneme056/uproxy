@@ -179,7 +179,7 @@ export class CordovaBrowserApi implements BrowserAPI {
 
     // Convert local endpoint ipv6 address ("::") to ipv4 for tun2socks.
     var socksServerAddress = '127.0.0.1:' + endpoint.port;
-    window.tun2socks.start(socksServerAddress).then(function(msg: string) {
+    window.tun2socks.start(socksServerAddress).then((msg) => {
       console.log('Tun2Socks start: ', msg);
     }).catch((err: string) => {
       console.error('Tun2Socks start error: ', err);
@@ -198,7 +198,7 @@ export class CordovaBrowserApi implements BrowserAPI {
         console.log('Cleared proxy settings');
       });
     } else if (this.proxyAccessMode_ === ProxyAccessMode.VPN) {
-      window.tun2socks.stop().then(function(msg: string) {
+      window.tun2socks.stop().then((msg) => {
         console.log('Tun2Socks stop: ', msg);
       }).catch((err: string) => {
         console.error('Tun2Socks stop error: ', err);
@@ -243,10 +243,10 @@ export class CordovaBrowserApi implements BrowserAPI {
       backButtonCanClose: false
     });
 
-    this.browser_.addEventListener(cordova.ThemeableBrowser.EVT_ERR, function(e) {
+    this.browser_.addEventListener(cordova.ThemeableBrowser.EVT_ERR, (e) => {
       console.error(e);
     });
-    this.browser_.addEventListener(cordova.ThemeableBrowser.EVT_WRN, function(e) {
+    this.browser_.addEventListener(cordova.ThemeableBrowser.EVT_WRN, (e) => {
       console.log(e);
     });
     this.browser_.addEventListener('closePressed', (e) => {

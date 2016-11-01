@@ -34,8 +34,10 @@ export default class ChromeTabAuth {
       }
     };
 
-    chrome.tabs.create({url: url, active: interactive},
-                       function(tab: chrome.tabs.Tab) {
+    chrome.tabs.create({
+      url: url,
+      active: interactive
+    }, (tab: chrome.tabs.Tab) => {
       if (interactive) {
         chrome.windows.update(tab.windowId, {focused: true});
       } else {
@@ -49,7 +51,7 @@ export default class ChromeTabAuth {
         }, 5000);
       }
       chrome.tabs.onUpdated.addListener(onTabChange);
-    }.bind(this));
+    });
   }
 
   private onError_ = (errorText :string) : void => {

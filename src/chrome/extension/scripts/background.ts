@@ -76,7 +76,7 @@ chrome.runtime.onMessageExternal.addListener((request :any, sender :chrome.runti
 chrome.runtime.onUpdateAvailable.addListener((details) => {
   console.log('Update available');
 
-  core.getVersion().then(function(versions) {
+  core.getVersion().then((versions) => {
     if (compareVersion(details.version, versions.version) > 0) {
       // Only update if the new version is the same as or older than the app
       // version.  If we are not able to update now, this will be taken care of
@@ -122,7 +122,7 @@ chrome.runtime.onInstalled.addListener((details :chrome.runtime.InstalledDetails
     });
   });
 
-  chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+  chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
       // Do not open the extension when it's installed if the user is
       // going through the inline install flow.
       if ((tabs[0].url.indexOf('uproxysite.appspot.com/install') == -1) &&
@@ -155,27 +155,33 @@ backgroundUi = new background_ui.BackgroundUi(
  */
 var ui = new user_interface.UserInterface(core, browserApi, backgroundUi);
 
-chrome.webRequest.onBeforeRequest.addListener(
-    function(details) {
-      browserApi.emit('inviteUrlData', details.url);
-      // TODO: If there are duplicate emits of this, consider the de-dupe logic
-      // used by the listener for copypaste links below.
-      return {
-          redirectUrl: chrome.extension.getURL('generic_ui/invite-received.html')
-      };
-    },
-    { urls: ['https://www.uproxy.org/invite*'] },
-    ['blocking']
-    );
+chrome.webRequest.onBeforeRequest.addListener((details) => {
+  browserApi.emit('inviteUrlData', details.url);
+  // TODO: If there are duplicate emits of this, consider the de-dupe logic
+  // used by the listener for copypaste links below.
+  return {
+    redirectUrl: chrome.extension.getURL('generic_ui/invite-received.html')
+  };
+}, {
+  urls: [
+    'https://www.uproxy.org/invite*'
+  ]
+}, [
+  'blocking'
+]);
 
-chrome.webRequest.onBeforeRequest.addListener(
-    function() {
-        return { cancel: true };
-    },
-    { urls: ['https://www.uproxy.org/oauth-redirect-uri*',
-        'https://www.uproxy.org/autoclose*'] },
-    ['blocking']
-    );
+chrome.webRequest.onBeforeRequest.addListener(() => {
+  return {
+    cancel: true
+  };
+}, {
+  urls: [
+    'https://www.uproxy.org/oauth-redirect-uri*',
+    'https://www.uproxy.org/autoclose*'
+  ]
+}, [
+  'blocking'
+]);
 
 chrome.tabs.onUpdated.addListener((tabId :number,
     changeInfo :chrome.tabs.TabChangeInfo, tab :chrome.tabs.Tab) => {
