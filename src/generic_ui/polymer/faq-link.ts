@@ -3,7 +3,7 @@
 
 Polymer({
   anchor: '',
-  openFaq: function() {
+  openFaq: () => {
     this.fire('core-signal', {name: 'open-faq', data: {anchor: this.anchor}});
   },
 });

@@ -6,7 +6,7 @@ declare var PolymerExpressions: any;
 Polymer({
   logs: '',
   loadingLogs: true,
-  openLogs: function() {
+  openLogs: () => {
     // Reset logs and display loading bar
     this.logs = '';
     this.loadingLogs = true;
@@ -18,11 +18,11 @@ Polymer({
     // opens the logsPanel, which contains the logs
     this.$.logsPanel.open();
   },
-  close: function() {
+  close: () => {
     // closes the logsPanel
     this.$.logsPanel.close();
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
   }
 });

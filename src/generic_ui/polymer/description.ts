@@ -2,19 +2,19 @@
 /// <reference path='../../../third_party/polymer/polymer.d.ts' />
 
 Polymer({
-  editDescription: function() {
+  editDescription: () => {
     this.descriptionInput = this.model.globalSettings.description;
     this.editing = true;
   },
-  saveDescription: function() {
+  saveDescription: () => {
     this.model.globalSettings.description = this.descriptionInput;
     this.$.state.background.updateGlobalSetting('description', this.descriptionInput);
     this.editing = false;
   },
-  cancelEditing: function() {
+  cancelEditing: () => {
     this.editing = false;
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
     this.editing = false;
     this.descriptionInput = '';

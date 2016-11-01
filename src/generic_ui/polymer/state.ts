@@ -16,7 +16,7 @@ var background: Background = null;
 var dialogClickFn: (fulfill: boolean, data?: Object) => void = null;
 
 Polymer({
-  ready: function() {
+  ready: () => {
     this.ui = ui_context.ui;
     this.core = ui_context.core;
     this.model = ui_context.model;
@@ -33,11 +33,11 @@ Polymer({
 
     this.background = background = new Background(this);
   },
-  handleDialogClick: function(fulfill: boolean, data: Object = null) {
+  handleDialogClick: (fulfill: boolean, data: Object = null) => {
     dialogClickFn(fulfill, data);
     dialogClickFn = null;
   },
-  openDialog: function(data: ui.DialogDescription) {
+  openDialog: (data: ui.DialogDescription) => {
     return new Promise<Object>((F, R) => {
       if (dialogClickFn) {
         console.error('Previous dialog was not cleaned up');
@@ -186,7 +186,7 @@ class ChromeBackgroundUiConnector implements panel_connector.BackgroundUiConnect
 
   constructor(listener: panel_connector.MessageHandler) {
     this.port = chrome.runtime.connect({ name: 'panel-to-extension' });
-    this.port.onMessage.addListener(function(message: ChromeMessageFormat) {
+    this.port.onMessage.addListener((message: ChromeMessageFormat) => {
       listener(message.name, message.data);
     });
   }

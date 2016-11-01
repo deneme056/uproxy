@@ -12,14 +12,14 @@ import * as dialogs from '../scripts/dialogs';
 const DEFAULT_PROVIDER = 'digitalocean';
 
 Polymer({
-  created: function() {
+  created: () => {
     this.offeringInstancesChanged = _.throttle(this.offeringInstancesChanged.bind(this), 100);
   },
   contact: {
     // Must adhere to the typescript interface UI.User.
     name: 'unknown'
   },
-  toggle: function() {
+  toggle: () => {
     if (this.contact.status == this.UserStatus.REMOTE_INVITED_BY_LOCAL) {
       return;
     }
@@ -38,11 +38,11 @@ Polymer({
       this.contact.getExpanded = !this.contact.getExpanded;
     }
   },
-  openLink: function(event :Event) {
+  openLink: (event :Event) => {
     this.ui.browserApi.openTab(this.contact.url);
     event.stopPropagation();  // Don't toggle when link is clicked.
   },
-  acceptInvitation: function() {
+  acceptInvitation: () => {
     var socialNetworkInfo :social.SocialNetworkInfo = {
       name: this.contact.network.name,
       userId: this.contact.network.userId
@@ -52,7 +52,7 @@ Polymer({
     });
   },
   // |action| is the string end for a uproxy_core_api.ConsentUserAction
-  modifyConsent: function(action :uproxy_core_api.ConsentUserAction) {
+  modifyConsent: (action :uproxy_core_api.ConsentUserAction) => {
     var command = <uproxy_core_api.ConsentCommand>{
       path: {
         network : {
@@ -68,47 +68,59 @@ Polymer({
   },
 
   // Proxy UserActions.
-  request: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.REQUEST) },
-  cancelRequest: function() {
-    this.modifyConsent(uproxy_core_api.ConsentUserAction.CANCEL_REQUEST)
+  request: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.REQUEST);
   },
-  ignoreOffer: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.IGNORE_OFFER) },
-  unignoreOffer: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.UNIGNORE_OFFER) },
+  cancelRequest: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.CANCEL_REQUEST);
+  },
+  ignoreOffer: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.IGNORE_OFFER);
+  },
+  unignoreOffer: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.UNIGNORE_OFFER);
+  },
 
   // Client UserActions
-  offer: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.OFFER) },
-  cancelOffer: function() {
+  offer: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.OFFER);
+  },
+  cancelOffer: () => {
     this.ui.stopGivingInUi();
     this.modifyConsent(uproxy_core_api.ConsentUserAction.CANCEL_OFFER);
   },
-  ignoreRequest: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.IGNORE_REQUEST) },
-  unignoreRequest: function() { this.modifyConsent(uproxy_core_api.ConsentUserAction.UNIGNORE_REQUEST) },
-  hasInstance: function(instanceId :string) {
+  ignoreRequest: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.IGNORE_REQUEST);
+  },
+  unignoreRequest: () => {
+    this.modifyConsent(uproxy_core_api.ConsentUserAction.UNIGNORE_REQUEST);
+  },
+  hasInstance: (instanceId :string) => {
     // TODO: upgrade to lodash 4.x
     return instanceId && (<any>_).contains(this.contact.allInstanceIds, instanceId);
   },
-  fireChanged: function() {
+  fireChanged: () => {
     // this is needed as a slight hack since the observer on the contacts array
     // a level up does not pick up on changes in contact properties
     this.fire('contact-changed');
   },
-  getExpandedChanged: function(oldIsExpanded :boolean, newIsExpanded :boolean) {
+  getExpandedChanged: (oldIsExpanded :boolean, newIsExpanded :boolean) => {
     if (newIsExpanded && this.mode == ui_constants.Mode.GET) {
       this.hideOnlineStatus = true;
     }
   },
-  shareExpandedChanged: function(oldIsExpanded :boolean, newIsExpanded :boolean) {
+  shareExpandedChanged: (oldIsExpanded :boolean, newIsExpanded :boolean) => {
     if (newIsExpanded && this.mode == ui_constants.Mode.SHARE) {
       this.hideOnlineStatus = true;
     }
   },
-  offeringInstancesChanged: function() {
+  offeringInstancesChanged: () => {
     // instanceId arbitrarily chosen
     // TODO: upgrade to lodash 4.x
     this.sortedInstances = (<any>_).sortByOrder(this.contact.offeringInstances,
                                          ['isOnline', 'instanceId'], ['desc', 'asc']);
   },
-  shareCloudFriend: function() {
+  shareCloudFriend: () => {
     ui_context.core.getInviteUrl({
       network: {
         name: this.contact.network.name,
@@ -126,7 +138,7 @@ Polymer({
           translator.i18n_t('CLOUD_SHARE_INSTRUCTIONS'), '', null, cloudInviteUrl));
     });
   },
-  removeCloudFriend: function(event: Event) {
+  removeCloudFriend: (event: Event) => {
     this.displayCloudRemovalConfirmation().then(() => {
       // Destroy cloud server if created by user
       return this.destroyCloudServerIfNeeded();
@@ -161,7 +173,7 @@ Polymer({
 
     event.stopPropagation();
   },
-  displayCloudRemovalConfirmation: function() {
+  displayCloudRemovalConfirmation: () => {
     if (this.contact.status === this.UserStatus.CLOUD_INSTANCE_CREATED_BY_LOCAL) {
       return this.$.state.openDialog(dialogs.getConfirmationDialogDescription(
         translator.i18n_t('REMOVE_CLOUD_SERVER'),
@@ -176,7 +188,7 @@ Polymer({
         translator.i18n_t('CONTINUE')));
     }
   },
-  destroyCloudServerIfNeeded: function() {
+  destroyCloudServerIfNeeded: () => {
     if (this.contact.status === this.UserStatus.CLOUD_INSTANCE_CREATED_BY_LOCAL) {
       this.fire('core-signal', {
         name: 'show-toast',
@@ -196,7 +208,7 @@ Polymer({
     }
     return Promise.resolve();
   },
-  ready: function() {
+  ready: () => {
     this.ui = ui_context.ui;
     this.ui_constants = ui_constants;
     this.model = ui_context.model;

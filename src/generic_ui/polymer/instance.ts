@@ -20,7 +20,7 @@ Polymer({
   // Two component constructor arguments:
   //  user :User (generic_ui/scripts/user.ts)
   //  instance :InstanceData (interfaces/social.ts)
-  ready: function() {
+  ready: () => {
     // Expose global ui object and UI module in this context. This allows the
     // hidden? watch for the get/give toggle to actually update.
     this.ui = ui;
@@ -36,7 +36,7 @@ Polymer({
       model.globalSettings.enabledExperiments.indexOf(
         uproxy_core_api.FEATURE_VERIFY) >= 0;
   },
-  start_: function(accessMode: browser_api.ProxyAccessMode) {
+  start_: (accessMode: browser_api.ProxyAccessMode) => {
     if (!this.instance.isOnline) {
       this.fire('core-signal', {
         name: 'show-toast',
@@ -54,20 +54,20 @@ Polymer({
         console.error('could not get access: ' + e.message);
       });
   },
-  stop: function() {
+  stop: () => {
     ui.stopUsingProxy();
     ui.stopGettingFromInstance(this.instance.instanceId);
   },
-  startBrowsing: function() {
+  startBrowsing: () => {
     this.start_(browser_api.ProxyAccessMode.IN_APP);
   },
-  startVpn: function() {
+  startVpn: () => {
     this.start_(browser_api.ProxyAccessMode.VPN);
   },
-  fireChanged: function() {
+  fireChanged: () => {
     this.fire('instance-changed');
   },
-  sasUpdated: function() {
+  sasUpdated: () => {
     // We don't use instance.verifySAS directly.  Instead, we use
     // this.sas to mean:
     //  - When null, there is no SAS to verify.  Hide the
@@ -89,7 +89,7 @@ Polymer({
       this.sas = this.instance.verifySAS;
     }
   },
-  verify: function() {
+  verify: () => {
     if (this.instance.verifyState !== social.VerifyState.VERIFY_BEGIN) {
       ui.startVerifying(this.instance);
       this.startedVerify = true;
@@ -97,13 +97,13 @@ Polymer({
       console.log('instance is already in verification.');
     }
   },
-  confirmSAS: function() {
+  confirmSAS: () => {
     console.log('Verified SAS');
     this.sas = null;
     ui.finishVerifying(this.instance, true);
     this.startedVerify = false;
   },
-  rejectSAS: function() {
+  rejectSAS: () => {
     console.log('Rejected SAS');
     this.sas = null;
     ui.finishVerifying(this.instance, false);

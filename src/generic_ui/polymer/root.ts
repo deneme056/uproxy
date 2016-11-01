@@ -34,7 +34,7 @@ Polymer({
   unableToShare: '',
   gettingStatus: null,
   sharingStatus: null,
-  viewChanged: function(oldView :ui_types.View, newView :ui_types.View) {
+  viewChanged: (oldView :ui_types.View, newView :ui_types.View) => {
     // If we're switching from the SPLASH page to the ROSTER, fire an
     // event indicating the user has logged in. roster.ts listens for
     // this event.
@@ -51,28 +51,28 @@ Polymer({
       this.$.state.background.updateGlobalSetting('hasSeenWelcome', true);
     }
   },
-  statsIconClicked: function() {
+  statsIconClicked: () => {
     this.$.mainPanel.openDrawer();
   },
-  closeSettings: function() {
+  closeSettings: () => {
     this.$.mainPanel.closeDrawer();
   },
-  setGetMode: function() {
+  setGetMode: () => {
     ui.setMode(ui_types.Mode.GET);
   },
-  setShareMode: function() {
+  setShareMode: () => {
     ui.setMode(ui_types.Mode.SHARE);
   },
-  closedWelcome: function() {
+  closedWelcome: () => {
   },
-  closedSharing: function() {
+  closedSharing: () => {
     model.globalSettings.hasSeenSharingEnabledScreen = true;
     this.$.state.background.updateGlobalSetting('hasSeenSharingEnabledScreen', true);
   },
-  closeDialog: function() {
+  closeDialog: () => {
     this.$.dialog.close();
   },
-  openDialog: function(e :Event, detail :ui_types.DialogDescription) {
+  openDialog: (e :Event, detail :ui_types.DialogDescription) => {
     /* 'detail' parameter holds the data that was passed when the open-dialog
      * signal was fired. It should be of the form:
      *
@@ -115,7 +115,7 @@ Polymer({
       });
     });
   },
-  dialogButtonClick: function(event :Event, detail :Object, target :HTMLElement) {
+  dialogButtonClick: (event :Event, detail :Object, target :HTMLElement) => {
     // Get userInput, or set to undefined if it is '', null, etc
     var userInput = this.$.dialogInput.value || undefined;
     if (this.dialog.userInputData && !userInput) {
@@ -130,23 +130,23 @@ Polymer({
     this.$.state.handleDialogClick(fulfill, userInput);
     this.$.dialog.close();
   },
-  selectAll: function(e :Event, d :Object, input :HTMLInputElement) {
+  selectAll: (e :Event, d :Object, input :HTMLInputElement) => {
     input.focus();
     input.select();
   },
-  reusableDialogClosed: function() {
+  reusableDialogClosed: () => {
     fulfillReusableDialogClosed();
   },
-  openProxyError: function() {
+  openProxyError: () => {
     this.$.proxyError.open();
   },
-  openReproxyError: function() {
+  openReproxyError: () => {
     this.$.reproxyError.open();
   },
-  closeReproxyError: function() {
+  closeReproxyError: () => {
     this.$.reproxyError.close();
   },
-  ready: function() {
+  ready: () => {
     // Expose global ui object and UI module in this context.
     this.ui = ui;
     this.core = ui_context.core;
@@ -163,7 +163,7 @@ Polymer({
     // can be scheduled appropriately by listening for this event:
     document.dispatchEvent(new Event('uproxy-root-ready'));
   },
-  tabSelected: function(e :Event) {
+  tabSelected: (e :Event) => {
     if (this.ui.isSharingDisabled &&
         this.model.globalSettings.mode == ui_types.Mode.SHARE) {
       // Keep the mode on get and display an error dialog.
@@ -178,20 +178,20 @@ Polymer({
       this.$.state.background.updateGlobalSetting('mode', model.globalSettings.mode);
     }
   },
-  revertProxySettings: function() {
+  revertProxySettings: () => {
     this.ui.stopUsingProxy();
     this.openAskForFeedback();
   },
-  restartProxying: function() {
+  restartProxying: () => {
     this.ui.restartProxying();
   },
-  showToast: function(e: Event, detail: { toastMessage: string, unableToGet?: boolean, unableToShare?: boolean }) {
+  showToast: (e: Event, detail: { toastMessage: string, unableToGet?: boolean, unableToShare?: boolean }) => {
     this.toastMessage = detail.toastMessage;
     this.unableToGet = detail.unableToGet || false;
     this.unableToShare = detail.unableToShare || false;
     this.$.toast.show();
   },
-  openTroubleshoot: function() {
+  openTroubleshoot: () => {
     if (this.unableToGet) {
       this.troubleshootTitle = ui.i18n_t('UNABLE_TO_GET');
     } else {
@@ -200,13 +200,13 @@ Polymer({
     this.$.toast.dismiss();
     this.fire('core-signal', {name: 'open-troubleshoot'});
   },
-  topOfStatuses: function(statusHeight: number, visible :boolean) {
+  topOfStatuses: (statusHeight: number, visible :boolean) => {
     return visible ? statusHeight : 0;
   },
   // mainPanel.selected can be either "drawer" or "main"
   // Our "drawer" is the settings panel. When the settings panel is open,
   // make sure to hide the stats tooltip so the two don't overlap.
-  drawerToggled: function() {
+  drawerToggled: () => {
     if (this.$.mainPanel.selected == 'drawer') {
       // Drawer was opened.
       this.$.statsTooltip.disabled = true;
@@ -219,7 +219,7 @@ Polymer({
     }
   },
   isSharingEnabledWithOthers: false,
-  updateIsSharingEnabledWithOthers: function() {
+  updateIsSharingEnabledWithOthers: () => {
     var trustedContacts = model.contacts.shareAccessContacts.trustedUproxy;
     if (trustedContacts.length === 1) {
       this.isSharingEnabledWithOthers =
@@ -231,20 +231,20 @@ Polymer({
   /*
    * Set our `dir` value to 'ltr' or 'rtl' based on current language.
    */
-  setDirectionality: function() {
+  setDirectionality: () => {
     if (_.includes(RTL_LANGUAGES, model.globalSettings.language)) {
       this.dir = 'rtl';
     } else {
       this.dir = 'ltr';
     }
   },
-  restart: function() {
+  restart: () => {
     this.$.state.background.restart();
   },
-  fireOpenInviteUserPanel: function() {
+  fireOpenInviteUserPanel: () => {
     this.fire('core-signal', { name: 'open-invite-user-dialog' });
   },
-  openAskForFeedback: function() {
+  openAskForFeedback: () => {
     this.$.state.openDialog(dialogs.getConfirmationDialogDescription(
         translator.i18n_t('ASK_FOR_FEEDBACK_TITLE'),
         translator.i18n_t('ASK_FOR_FEEDBACK_CONNECTION_DISCONNECTED'))).then(
@@ -258,13 +258,13 @@ Polymer({
       },
       () => { /* MT */ });
   },
-  updateGettingStatus: function(e: Event, gettingStatus?: string) {
+  updateGettingStatus: (e: Event, gettingStatus?: string) => {
     this.gettingStatus = gettingStatus;
   },
-  updateSharingStatus: function(e: Event, sharingStatus?: string) {
+  updateSharingStatus: (e: Event, sharingStatus?: string) => {
     this.sharingStatus = sharingStatus;
   },
-  handleBackButton: function() {
+  handleBackButton: () => {
     // If the generic dialog is open, it's the highest-level thing in the UI
     if (this.$.dialog.opened) {
       this.closeDialog();

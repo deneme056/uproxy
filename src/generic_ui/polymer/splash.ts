@@ -28,13 +28,13 @@ Polymer({
     INTRO: 0,
     METRICS_OPT_IN: 1
   },
-  backToIntro: function() {
+  backToIntro: () => {
     this.state = this.SPLASH_STATES.INTRO;
   },
-  goToStats: function() {
+  goToStats: () => {
     this.state = this.SPLASH_STATES.METRICS_OPT_IN;
   },
-  updateLanguage: function(event :Event, detail :any, sender :HTMLElement) {
+  updateLanguage: (event :Event, detail :any, sender :HTMLElement) => {
     if (detail.isSelected) {
       var curLanguage = this.model.globalSettings.language;
       var newLanguage = detail.item.getAttribute('languageCode');
@@ -44,23 +44,23 @@ Polymer({
       }
     }
   },
-  updateMetricsCollection: function(val :Boolean) {
+  updateMetricsCollection: (val :Boolean) => {
     model.globalSettings.hasSeenMetrics = true;
     this.$.state.background.updateGlobalSetting('hasSeenMetrics', true);
     model.globalSettings.statsReportingEnabled = val;
     this.$.state.background.updateGlobalSetting('statsReportingEnabled', val);
     ui.view = ui_constants.View.ROSTER;
   },
-  enableStats: function() {
+  enableStats: () => {
     return this.updateMetricsCollection(true);
   },
-  disableStats: function() {
+  disableStats: () => {
     return this.updateMetricsCollection(false);
   },
-  open: function() {
+  open: () => {
     this.settings = this.jsonifySettings_(ui_context.model.globalSettings);
   },
-  ready: function() {
+  ready: () => {
     this.model = model;
     this.languages = languages;
     var curLanguage = this.model.globalSettings.language;

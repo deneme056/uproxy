@@ -11,12 +11,12 @@ var model = ui_context.model;
 Polymer({
   signedIn: false,
   networkInfo: null,
-  updateSignedIn: function() {
+  updateSignedIn: () => {
     var network = model.getNetwork(this.name);
     this.signedIn = !!network;
     this.networkInfo = network ? network : null;
   },
-  connect: function() {
+  connect: () => {
     if (this.name == 'Quiver') {
       ui.loginToQuiver();
     } else {
@@ -26,7 +26,7 @@ Polymer({
     }
     this.fire('core-signal', {name: 'close-settings'});
   },
-  logout: function() {
+  logout: () => {
     if (!this.signedIn) {
       return;
     }
@@ -64,7 +64,7 @@ Polymer({
       });
     });
   },
-  ready: function() {
+  ready: () => {
     this.model = model;
     this.displayName = ui.getNetworkDisplayName(this.name);
   },

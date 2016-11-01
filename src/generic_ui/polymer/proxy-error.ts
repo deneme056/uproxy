@@ -3,14 +3,14 @@
 
 Polymer({
   error: false,
-  openWithError: function() {
+  openWithError: () => {
     this.wasError = true;
     this.open();
   },
-  open: function() {
+  open: () => {
     this.$.dialog.open();
   },
-  close: function() {
+  close: () => {
     this.wasError = false;
     this.$.dialog.close();
   },

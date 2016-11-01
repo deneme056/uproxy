@@ -22,13 +22,13 @@ Polymer({
   portControlSupport: null,
   reproxyCheck: uproxy_core_api.ReproxyCheck.UNCHECKED,
   status: StatusState.EMPTY,
-  jsonifySettings_: function(settingsObject :Object) {
+  jsonifySettings_: (settingsObject :Object) => {
     return JSON.stringify(settingsObject, null, ' ');
   },
-  close: function() {
+  close: () => {
     this.$.advancedSettingsPanel.close();
   },
-  open: function() {
+  open: () => {
     this.settings = this.jsonifySettings_(ui_context.model.globalSettings);
     this.status = StatusState.EMPTY;
 
@@ -45,7 +45,7 @@ Polymer({
   // Perform rudimentary JSON check for the text settings.
   // We will only check that the number and names of keys are identical.
   // This will fail if the user tries to change key order.
-  checkSettings_: function(oldSettings :any, newSettings :any) {
+  checkSettings_: (oldSettings :any, newSettings :any) => {
     for (var key in oldSettings){
       if (!(key in newSettings)) {
         return false;
@@ -58,7 +58,7 @@ Polymer({
     }
     return true;
   },
-  setAdvancedSettings: function() {
+  setAdvancedSettings: () => {
     try {
       var newSettings = JSON.parse(this.settings);
       if (!this.checkSettings_(ui_context.model.globalSettings, newSettings)) {
@@ -96,17 +96,17 @@ Polymer({
       this.status = StatusState.PARSE_ERROR;
     }
   },
-  viewLogs: function() {
+  viewLogs: () => {
    // calls logs.html to open the logs
     this.fire('core-signal', { name: 'open-logs' });
   },
-  refreshPortControl: function() {
+  refreshPortControl: () => {
     this.portControlSupport = uproxy_core_api.PortControlSupport.PENDING;
     this.$.state.core.getPortControlSupport().then((support: uproxy_core_api.PortControlSupport) => {
       this.portControlSupport = support;
     });
   },
-  refreshReproxyCheck: function() {
+  refreshReproxyCheck: () => {
     this.reproxyCheck = uproxy_core_api.ReproxyCheck.PENDING;
     this.testedTorPort = this.torPort;
     this.$.state.core.checkReproxy(this.testedTorPort)
@@ -114,13 +114,13 @@ Polymer({
         this.reproxyCheck = check;
       });
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
   },
   computed: {
     'opened': '$.advancedSettingsPanel.opened'
   },
-  _reproxyCheckToString: function(check: uproxy_core_api.ReproxyCheck) :string {
+  _reproxyCheckToString: (check: uproxy_core_api.ReproxyCheck) => {
     switch (check) {
       case uproxy_core_api.ReproxyCheck.UNCHECKED:
         return 'UNCHECKED';
@@ -134,22 +134,22 @@ Polymer({
         return '';
     }
   },
-  _supportsPortControl: function(supportStatus: uproxy_core_api.PortControlSupport) {
+  _supportsPortControl: (supportStatus: uproxy_core_api.PortControlSupport) => {
     return supportStatus === uproxy_core_api.PortControlSupport.TRUE;
   },
-  _doesNotSupportPortControl: function(supportStatus: uproxy_core_api.PortControlSupport) {
+  _doesNotSupportPortControl: (supportStatus: uproxy_core_api.PortControlSupport) => {
     return supportStatus === uproxy_core_api.PortControlSupport.FALSE;
   },
-  _portControlStatusPending: function(supportStatus: uproxy_core_api.PortControlSupport) {
+  _portControlStatusPending: (supportStatus: uproxy_core_api.PortControlSupport) => {
     return supportStatus === uproxy_core_api.PortControlSupport.PENDING;
   },
-  _statusStateIsSet: function(statusState: StatusState) {
+  _statusStateIsSet: (statusState: StatusState) => {
     return statusState === StatusState.SET;
   },
-  _statusStateIsParseErorr: function(statusState: StatusState) {
+  _statusStateIsParseErorr: (statusState: StatusState) => {
     return statusState === StatusState.PARSE_ERROR;
   },
-  _statusStateIsKeyValueError: function(statusState: StatusState) {
+  _statusStateIsKeyValueError: (statusState: StatusState) => {
     return statusState === StatusState.KEY_VALUE_ERROR;
   }
 });

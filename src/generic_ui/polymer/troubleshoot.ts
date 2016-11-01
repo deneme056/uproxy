@@ -5,15 +5,15 @@ Polymer({
   analyzedNetwork: false,
   natType: '',
   natImpact: '',
-  close: function() {
+  close: () => {
     this.$.troubleshootDialog.close();
   },
-  open: function() {
+  open: () => {
     this.analyzedNetwork = false;
     this.analyzingNetwork = false;
     this.$.troubleshootDialog.open();
   },
-  submitFeedback: function() {
+  submitFeedback: () => {
     this.fire('core-signal', {
       name: 'open-feedback', data: {
         includeLogs: this.analyzedNetwork,
@@ -22,7 +22,7 @@ Polymer({
     });
     this.close();
   },
-  getNatType: function() {
+  getNatType: () => {
     this.analyzingNetwork = true;
     ui_context.core.getNatType().then((natType :string) => {
       this.natType = natType;
@@ -37,7 +37,7 @@ Polymer({
       this.analyzedNetwork = true;
     });
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
   }
 });

@@ -30,7 +30,7 @@ describe('local_storage.Storage', () => {
     // moving on to the next test.
     // TODO: change all test cases to wait on storage writes to be complete
     // before calling done, then we can remove this setTimeout hack.
-    setTimeout(function() {
+    setTimeout(() => {
       storage.reset().then(() => {
         storage.keys().then((keys) => {
           expect(keys).toEqual([]);

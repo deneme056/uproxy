@@ -20,7 +20,7 @@ Polymer({
   mostRecentCreateId: 0,
   installStatus: '',
   installProgress: 0,
-  open: function() {
+  open: () => {
     // Set translated HTML content - need to use injectBoundHTML
     // in order to enable <uproxy-faq-link>, etc tags in the text.
     this.injectBoundHTML(
@@ -38,7 +38,7 @@ Polymer({
 
     this.showFirstOverlay();
   },
-  showFirstOverlay: function () {
+  showFirstOverlay: () => {
     this.closeOverlays();
     ui.cloudUpdate({
       operation: uproxy_core_api.CloudOperationType.CLOUD_HAS_OAUTH,
@@ -51,11 +51,11 @@ Polymer({
       }
     });
   },
-  showCreateServerOverlay: function() {
+  showCreateServerOverlay: () => {
     this.closeOverlays();
     this.$.createServerOverlay.open();
   },
-  launchDigitalOceanSignup: function() {
+  launchDigitalOceanSignup: () => {
     // DigitalOcean referral codes trump promo codes,
     // so only add our refcode to the url if the user has no promo code.
     const havePromo = this.$.havePromoCode.checked;
@@ -63,24 +63,24 @@ Polymer({
     const registerUrlWithRefcode = registerUrl + '?refcode=5ddb4219b716';
     ui.openTab(havePromo ? registerUrl : registerUrlWithRefcode);
   },
-  launchDigitalOceanSettings: function() {
+  launchDigitalOceanSettings: () => {
     ui.openTab('https://cloud.digitalocean.com/droplets');
   },
-  launchFeedback: function() {
+  launchFeedback: () => {
       this.fire('core-signal', {
       name: 'open-feedback', data: {
         feedbackType: uproxy_core_api.UserFeedbackType.CLOUD_SERVER_NO_START
       }
     });
   },
-  back: function() {
+  back: () => {
     if (this.$.failureOverlay.opened) {
       this.showFirstOverlay();
     } else {
       this.closeOverlays();
     }
   },
-  closeOverlays: function() {
+  closeOverlays: () => {
     this.$.signUpOrSignInOverlay.close();
     this.$.createServerOverlay.close();
     this.$.installingOverlay.close();
@@ -89,7 +89,7 @@ Polymer({
     this.$.serverExistsOverlay.close();
     this.$.cancelingOverlay.close();
   },
-  createServer: function() {
+  createServer: () => {
     const createId = Math.floor((Math.random() * 1000000)) + 1;
     this.mostRecentCreateId = createId;
 
@@ -124,7 +124,7 @@ Polymer({
       }
     });
   },
-  removeServerAndInstallAgain: function() {
+  removeServerAndInstallAgain: () => {
     this.mostRecentCreateId = 0;
     this.closeOverlays();
     this.installStatus = translator.i18n_t('REMOVING_UPROXY_CLOUD_STATUS');
@@ -147,7 +147,7 @@ Polymer({
       });
     }).then(() => this.createServer());
   },
-  cancelCloudInstall: function() {
+  cancelCloudInstall: () => {
     this.mostRecentCreateId = 0;
     this.$.cancelingOverlay.open();
     return ui.cloudUpdate({
@@ -171,27 +171,27 @@ Polymer({
       });
     });
   },
-  select: function(e: Event, d: Object, input: HTMLInputElement) {
+  select: (e: Event, d: Object, input: HTMLInputElement) => {
     input.focus();
     input.select();
   },
-  promoIdChanged: function() {
+  promoIdChanged: () => {
     // do not uncheck the box if we no longer have the promo id set
     if (ui.model.globalSettings.activePromoId) {
       this.$.havePromoCode.checked = true;
     }
   },
-  havePromoChanged: function () {
+  havePromoChanged: () => {
     ui.model.globalSettings.activePromoId = this.$.havePromoCode.checked;
     this.$.state.background.updateGlobalSetting('activePromoId', this.$.havePromoCode.checked);
   },
-  updateCloudInstallStatus: function(e: Event, status: string) {
+  updateCloudInstallStatus: (e: Event, status: string) => {
     this.installStatus = translator.i18n_t(status);
   },
-  updateCloudInstallProgress: function(e: Event, progress: number) {
+  updateCloudInstallProgress: (e: Event, progress: number) => {
     this.installProgress = progress;
   },
-  ready: function() {
+  ready: () => {
     this.model = ui.model;
   },
   observe: {

@@ -50,11 +50,11 @@ describe('remote_instance.RemoteInstance', () => {
   user.network = <social.Network><any>jasmine.createSpyObj(
       'network', ['getUser']);
 
-  user['getLocalInstanceId'] = function() {
+  user['getLocalInstanceId'] = () => {
       return 'localInstanceId';
   }
 
-  user.isInstanceOnline = function() {
+  user.isInstanceOnline = () => {
     return true;
   };
   user.onceNameReceived = Promise.resolve<string>('name');
@@ -78,7 +78,7 @@ describe('remote_instance.RemoteInstance', () => {
     var instance0 :remote_instance.RemoteInstance;
 
    it('fresh instance has no state', (done) => {
-      globals.storage.save = function(key :string, value :Object) {
+      globals.storage.save = (key :string, value :Object) => {
         return realStorage.save(key, value);
       };
       instance0 = new remote_instance.RemoteInstance(user, 'instanceId');
@@ -115,8 +115,8 @@ describe('remote_instance.RemoteInstance', () => {
       testStorage.reset().then(() => {
         var network = <social.Network><any>jasmine.createSpyObj(
             'network', ['getUser']);
-        network['getStorePath'] = function() { return 'networkPath'; };
-        network['getLocalInstanceId'] = function() { return 'myInstanceId'; };
+        network['getStorePath'] = () => { return 'networkPath'; };
+        network['getLocalInstanceId'] = () => { return 'myInstanceId'; };
         network['myInstance'] =
             new local_instance.LocalInstance(network, 'localUserId');
         var user = new remote_user.User(network, 'testUser');

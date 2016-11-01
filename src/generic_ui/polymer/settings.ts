@@ -25,7 +25,7 @@ Polymer({
   connectedNetwork: '',
   showRestartButton: false,
   showLogoutButton: false,
-  logOut: function() {
+  logOut: () => {
     // logout all networks asynchronously
 
     var isGetting = ui.isGettingAccess();
@@ -52,16 +52,16 @@ Polymer({
 
     this.fire('core-signal', {name: 'close-settings'});
   },
-  restart: function() {
+  restart: () => {
     this.$.state.background.restart();
   },
-  openFeedbackForm: function() {
+  openFeedbackForm: () => {
     this.fire('core-signal', {name: 'open-feedback'});
   },
-  openAdvancedSettingsForm: function() {
+  openAdvancedSettingsForm: () => {
     this.fire('core-signal', {name: 'open-advanced-settings'});
   },
-  networksChanged: function() {
+  networksChanged: () => {
     this.showLogoutButton = this.isUserLoggedIntoNonCloudNetwork();
     if (!ui_context.model.onlineNetworks) {
       return;
@@ -73,7 +73,7 @@ Polymer({
       this.connectedNetwork = '';
     }
   },
-  isUserLoggedIntoNonCloudNetwork: function() {
+  isUserLoggedIntoNonCloudNetwork: () => {
     if (!ui_context.model.onlineNetworks) {
       return false;
     }
@@ -84,13 +84,13 @@ Polymer({
     }
     return false;
   },
-  updateStatsReportingEnabled: function() {
+  updateStatsReportingEnabled: () => {
     this.$.state.background.updateGlobalSetting('statsReportingEnabled', ui_context.model.globalSettings.statsReportingEnabled);
   },
-  toggleAccountChooser: function() {
+  toggleAccountChooser: () => {
     this.accountChooserOpen = !this.accountChooserOpen;
   },
-  ready: function() {
+  ready: () => {
     this.ui = ui;
     this.model = ui_context.model;
     this.model = languageSettings;
@@ -101,7 +101,7 @@ Polymer({
   observe: {
     'model.onlineNetworks': 'networksChanged'
   },
-  updateLanguage: function(event :Event, detail :any, sender :HTMLElement) {
+  updateLanguage: (event :Event, detail :any, sender :HTMLElement) => {
     if (detail.isSelected) {
       var newLanguage = detail.item.getAttribute('languageCode');
       ui.updateLanguage(newLanguage);

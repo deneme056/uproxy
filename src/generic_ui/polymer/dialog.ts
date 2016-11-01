@@ -15,7 +15,7 @@
 // 99% of our users, only occurs on ititial startup, seems to only occur about
 // 1/10 times, and is immediately fixed by closing and re-opening the panel.
 Polymer({
-  repositionTarget: function() {
+  repositionTarget: () => {
     this.super(arguments);
 
     if (parseFloat(this.target.style.left) < 0 || !this.sizingTarget.offsetWidth) {

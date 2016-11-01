@@ -11,7 +11,7 @@ var ui = ui_context.ui;
 var core = ui_context.core;
 
 var inviteUser = {
-  openInviteUserPanel: function() {
+  openInviteUserPanel: () => {
     // Reset the input, expectation is for it to be empty
     this.inviteCode = '';
     // Forces the placeholder text to be visible again.
@@ -23,10 +23,10 @@ var inviteUser = {
 
     this.$.inviteUserPanel.open();
   },
-  closeInviteUserPanel: function() {
+  closeInviteUserPanel: () => {
     this.$.inviteUserPanel.close();
   },
-  back: function() {
+  back: () => {
     if (this.$.loginToInviteFriendDialog.opened) {
       this.$.loginToInviteFriendDialog.close();
       return;
@@ -44,7 +44,7 @@ var inviteUser = {
 
     this.closeInviteUserPanel();
   },
-  networkTapped: function(event: Event, detail: Object, target: HTMLElement) {
+  networkTapped: (event: Event, detail: Object, target: HTMLElement) => {
     var networkName = target.getAttribute('data-network');
     if (networkName === 'Cloud') {
       return this.cloudInstall();
@@ -67,10 +67,10 @@ var inviteUser = {
       }
     }
   },
-  cloudInstall: function() {
+  cloudInstall: () => {
     this.$.installCloud.open();
   },
-  loginTapped: function() {
+  loginTapped: () => {
     // loginTapped should only be called by the loginToInviteFriendDialog, which
     // is not used for Quiver.
     if (this.selectedNetworkName === 'Quiver') {
@@ -84,13 +84,13 @@ var inviteUser = {
       this.initInviteForNetwork(this.selectedNetworkName);
     });
   },
-  initInviteForNetwork: function(networkName: string) {
+  initInviteForNetwork: (networkName: string) => {
     this.selectedNetworkName = networkName;
     // After login for these networks, open another view which allows users
     // to invite their friends.
     this.$.networkInviteUser.open();
   },
-  loginToInviteFriendDialogOpened: function() {
+  loginToInviteFriendDialogOpened: () => {
     // Set confirmation message, which may include some HTML (e.g. strong, br).
     var confirmationMessage :string;
     if (this.selectedNetworkName === 'GitHub') {
@@ -109,16 +109,16 @@ var inviteUser = {
     // will be smaller than expected.
     this.$.loginToInviteFriendDialog.resizeHandler();
   },
-  getNetworkDisplayName: function(networkName :string) {
+  getNetworkDisplayName: (networkName :string) => {
     if (networkName === 'Cloud') {
       return ui.i18n_t('NETWORK_LIST_CLOUD_LABEL');
     }
     return ui.getNetworkDisplayName(networkName);
   },
-  closeLoginDialog: function() {
+  closeLoginDialog: () => {
     this.$.loginToInviteFriendDialog.close();
   },
-  acceptInvite: function() {
+  acceptInvite: () => {
     ui.handleInvite(this.inviteCode).then(() => {
       this.closeInviteUserPanel();
       this.fire('core-signal', {
@@ -132,7 +132,7 @@ var inviteUser = {
         '', translator.i18n_t('FRIEND_ADD_ERROR')));
     });
   },
-  ready: function() {
+  ready: () => {
     this.selectedNetworkName = '';
     this.model = ui_context.model;
     this.inviteCode = '';

@@ -23,11 +23,11 @@ var getNetworkInfoObj = () => {
   })
 };
 
-var add = function(a:number,b:number) :number {
-  return a+b;
+var add = (a:number, b:number) => {
+  return a + b;
 }
 
-var newBuffer = function(a:number) :metrics_module.WeekBuffer<number> {
+var newBuffer = (a:number) => {
   var buf = new metrics_module.WeekBuffer<number>();
   buf.update(a, add);
   return buf;

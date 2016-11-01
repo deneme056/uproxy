@@ -1,9 +1,9 @@
 Polymer({
   active: false,
-  close: function() {
+  close: () => {
     this.fire('closed');
   },
-  isHidden: function(element :HTMLElement) {
+  isHidden: (element :HTMLElement) => {
     // an element is considered to be hidden if it is not displayed or any of
     // its parents are not displayed
     if (window.getComputedStyle(element).display === 'none') {
@@ -16,7 +16,7 @@ Polymer({
 
     return this.isHidden(element.parentElement);
   },
-  doReposition: function() {
+  doReposition: () => {
     if (!this.active) {
       // if the current element is not active, put off repositioning it until
       // it is actually active (this function will be called then)
@@ -47,7 +47,7 @@ Polymer({
 
     this.reposition();
   },
-  reposition: function() {
+  reposition: () => {
     var prev = this.previousElementSibling;
     if (!prev) {
       // this handles the case where the element has been removed from the DOM
@@ -100,20 +100,20 @@ Polymer({
     // once we have the correct positioning for the element, show it
     this.removeAttribute('hidden');
   },
-  attached: function() {
+  attached: () => {
     this.repositionCallback = () => {
       /* pretty much just binding the function to this */
       this.doReposition();
     }
     window.addEventListener('resize', this.repositionCallback);
   },
-  detached: function() {
+  detached: () => {
     window.removeEventListener('resize', this.repositionCallback);
   },
-  domReady: function() {
+  domReady: () => {
     this.doReposition();
   },
-  activeChanged: function(old :boolean, val :boolean) {
+  activeChanged: (old :boolean, val :boolean) => {
     if (val) {
       // we will un-hide the element at the end of repositioning
       this.async(() => {
@@ -123,7 +123,7 @@ Polymer({
       this.setAttribute('hidden', '');
     }
   },
-  ready: function() {
+  ready: () => {
     this.model = ui_context.model;
   }
 });

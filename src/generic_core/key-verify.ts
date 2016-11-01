@@ -629,8 +629,8 @@ export class KeyVerify {
     } else {
       // Initialize static maps used for message validation.
       // The key map isn't initialized yet, so build it.
-      let setTableEntry = function(type: string, proto:any, prereqs:[Type],
-                                   initiatorReceives:boolean) {
+      let setTableEntry = (type: string, proto:any, prereqs:[Type],
+                                   initiatorReceives:boolean) => {
         // Create a new instance of the object, then grab the keys out
         // to make the list that we use for comparison in
         // structuralVerify_().

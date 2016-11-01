@@ -4,7 +4,7 @@
 import * as ui_constants from '../../interfaces/ui';
 
 Polymer({
-  ready: function() {
+  ready: () => {
     this.ui_constants = ui_constants;
   },
   computed: {

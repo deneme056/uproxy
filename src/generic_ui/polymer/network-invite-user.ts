@@ -11,7 +11,7 @@ var model = ui_context.model;
 var core = ui_context.core;
 
 Polymer({
-  generateInviteUrl: function(networkName: string) {
+  generateInviteUrl: (networkName: string) => {
     var selectedNetwork = model.getNetwork(networkName);
     var createInviteArgs :uproxy_core_api.CreateInviteArgs = {
       network: {
@@ -26,7 +26,7 @@ Polymer({
       return selectedNetwork;
     });
   },
-  sendToFacebookFriend: function() {
+  sendToFacebookFriend: () => {
     this.generateInviteUrl('Facebook-Firebase-V2').then(() => {
       var encodedInviteUrl = encodeURIComponent(this.inviteUrl);
 
@@ -49,7 +49,7 @@ Polymer({
       this.close();
     });
   },
-  sendToGMailFriend: function() {
+  sendToGMailFriend: () => {
     this.generateInviteUrl('GMail').then((selectedNetwork:any) => {
       var selectedNetworkInfo = {
         name: selectedNetwork.name,
@@ -67,7 +67,7 @@ Polymer({
       this.$.state.openDialog(dialogs.getMessageDialogDescription('', translator.i18n_t('INVITE_EMAIL_SENT')));
     });
   },
-  inviteGithubFriend: function() {
+  inviteGithubFriend: () => {
     var selectedNetwork = model.getNetwork('GitHub');
     core.inviteGitHubUser({
       network: {
@@ -88,18 +88,18 @@ Polymer({
             translator.i18n_t('GITHUB_INVITE_SEND_FAILED')));
     });
   },
-  open: function() {
+  open: () => {
     this.initFields();
     this.$.networkInviteUserPanel.open();
   },
-  close: function() {
+  close: () => {
     this.$.networkInviteUserPanel.close();
   },
-  select: function(e :Event, d :Object, input :HTMLInputElement) {
+  select: (e :Event, d :Object, input :HTMLInputElement) => {
     input.focus();
     input.select();
   },
-  confirmClicked: function() {
+  confirmClicked: () => {
     if (this.network === 'GitHub') {
       this.inviteGithubFriend();
     } else if (this.network === 'GMail') {
@@ -116,7 +116,7 @@ Polymer({
       this.$.confirmButton.disabled = true;
     }
   },
-  initFields: function() {
+  initFields: () => {
     // Fields which should be reset every time this screen opens.
     this.inviteUrl = '';
     this.inviteUserEmail = '';
@@ -134,7 +134,7 @@ Polymer({
     this.$.offerAccessCheckbox.disabled = false;
     this.$.confirmButton.disabled = false;
   },
-  ready: function() {
+  ready: () => {
     this.initFields();
   },
   computed: {

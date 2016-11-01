@@ -29,7 +29,7 @@ describe('remote_user.User', () => {
       'getStorePath',
       'notifyUI'
   ]);
-  network['getLocalInstanceId'] = function() { return 'dummyInstanceId'; };
+  network['getLocalInstanceId'] = () => { return 'dummyInstanceId'; };
   network['send'] = () => { return Promise.resolve(); };
   network['isEncrypted'] = () => { return false; };
   network['myInstance'] =
@@ -192,7 +192,7 @@ describe('remote_user.User', () => {
   describe('client <---> instance', () => {
     it('syncs clientId <--> instanceId mapping', (done) => {
       var realStorage = new local_storage.Storage;
-      storage.save = function(key :string, value :Object) {
+      storage.save = (key :string, value :Object) => {
         return realStorage.save(key, value);
       };
       spyOn(storage, 'save').and.callThrough();

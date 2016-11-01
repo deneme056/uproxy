@@ -651,11 +651,11 @@ export class uProxyCore implements uproxy_core_api.CoreApi {
 
   public pingUntilOnline = (pingUrl :string) : Promise<void> => {
     var ping = () : Promise<void> => {
-      return new Promise<void>(function(fulfill, reject) {
+      return new Promise<void>((fulfill, reject) => {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', pingUrl);
-        xhr.onload = function() { fulfill(); };
-        xhr.onerror = function(e) { reject(new Error('Ping failed')); };
+        xhr.onload = () => { fulfill(); };
+        xhr.onerror = (e) => { reject(new Error('Ping failed')); };
         xhr.send();
       });
     }

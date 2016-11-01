@@ -331,7 +331,7 @@ export class UserInterface implements ui_constants.UiApi {
           + ' incur charges.');
       }
       this.isConnectedToCellular_ = isConnectedToCellular;
-    }, function(reason) {
+    }, (reason) => {
       console.log('Could not check if connected to cellular or not. reason: ' + reason);
     });
   }

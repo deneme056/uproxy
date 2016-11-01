@@ -6,10 +6,10 @@ import * as uproxy_core_api from '../../interfaces/uproxy_core_api';
 var ui = ui_context.ui;
 
 Polymer({
-  close: function() {
+  close: () => {
     this.$.faqPanel.close();
   },
-  open: function(e :Event, detail :{anchor :string}) {
+  open: (e :Event, detail :{anchor :string}) => {
     // Since opening the FAQ panel is async, set the openingAnchor,
     // and then scrollAfterOpening will scroll to openingAnchor after
     // the panel has finished opening.
@@ -21,28 +21,27 @@ Polymer({
 
     this.$.faqPanel.open();
   },
-  scrollAfterOpening: function() {
+  scrollAfterOpening: () => {
     var anchorElem = this.$[this.openingAnchor];
     anchorElem.scrollIntoView();
   },
-  scroll: function(e :Event) {
+  scroll: (e :Event) => {
     var elemTapped = <HTMLElement>e.target;
     var anchor = elemTapped.getAttribute('data-anchor');
     var anchorElem = this.$[anchor];
     anchorElem.scrollIntoView();
   },
-  openTab: function(e :Event) {
+  openTab: (e :Event) => {
     var elemTapped = <HTMLElement>e.target;
     var url = elemTapped.getAttribute('data-url');
     this.ui.openTab(url);
   },
-  sanitize: function(i18nMessage :string) {
+  sanitize: (i18nMessage :string) => {
     var sanitizedMessage = ui.i18nSanitizeHtml(i18nMessage);
 
     // Replace all links with openTab events
-    sanitizedMessage = sanitizedMessage
-        .replace(/<a([^>]+)>(.+?)<\/a>/g,
-            function(p0 :string, p1 :string, p2 :string) {
+    sanitizedMessage = sanitizedMessage.replace(/<a([^>]+)>(.+?)<\/a>/g,
+        (p0 :string, p1 :string, p2 :string) => {
       // p0 is the full string matched: e.g. <a href="...">Click Me!</a>
       // p1 is the first matching group: e.g. href="..."
       // p2 is the second matching group: e.g. Click Me!
@@ -53,7 +52,7 @@ Polymer({
     });
     return sanitizedMessage;
   },
-  translateElements: function() {
+  translateElements: () => {
     var textElements = document.querySelectorAll('html /deep/ .i18n');
     for (var i = 0; i < textElements.length; i++) {
       var element = <HTMLElement>(textElements[i]);
@@ -65,12 +64,12 @@ Polymer({
       this.injectBoundHTML(i18nMessage, element);
     }
   },
-  ready: function() {
+  ready: () => {
     this.openingAnchor = '';
     this.ui = ui_context.ui;
     this.model = ui_context.model;
   },
-  domReady: function() {
+  domReady: () => {
     this.translateElements();
   },
   observe: {

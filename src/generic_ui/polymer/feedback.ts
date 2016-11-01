@@ -14,13 +14,13 @@ Polymer({
   feedback: '',
   logs: '',
   feedbackType: null,
-  close: function() {
+  close: () => {
     this.$.feedbackPanel.close();
   },
-  open: function(e:Event, data?:{
+  open: (e:Event, data?:{
     includeLogs: boolean;
     feedbackType: uproxy_core_api.UserFeedbackType;
-   }) {
+   }) => {
     if (data && data.includeLogs) {
       this.$.logCheckbox.checked = true;
     }
@@ -29,7 +29,7 @@ Polymer({
     }
     this.$.feedbackPanel.open();
   },
-  sendFeedback: function() {
+  sendFeedback: () => {
     this.feedback = this.feedback.trim();
     //if user does not select something from dropdown
     if (this.$.errorInput.selected == null) {
@@ -97,20 +97,20 @@ Polymer({
       this.$.sendingFeedbackDialog.close();
     });
   },
-  toggleDropdown: function() {
+  toggleDropdown: () => {
     this.$.collapse.toggle();
   },
-  changePlaceholder: function(event: Event, detail: any, sender: HTMLElement) {
+  changePlaceholder: (event: Event, detail: any, sender: HTMLElement) => {
     if (detail.isSelected) {
       this.$.dropdownContainer.textContent = detail.item.textContent;
       this.$.collapse.opened = false;
     }
   },
-  viewLogs: function() {
+  viewLogs: () => {
     // calls to logs.html to view logs
     this.fire('core-signal', { name: 'open-logs' });
   },
-  ready: function() {
+  ready: () => {
     this.ui = ui_context.ui;
     this.model = ui_context.model;
     this.UserFeedbackType = uproxy_core_api.UserFeedbackType;

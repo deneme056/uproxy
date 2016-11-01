@@ -1,6 +1,6 @@
 Polymer({
   color: '#12A391',
-  back: function() {
+  back: () => {
     if (!this.disableback) {
       this.fire('go-back');
     }
