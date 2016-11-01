@@ -5,14 +5,14 @@ freedom = freedomMocker.makeMockFreedomInModuleEnv();
 import * as arraybuffers from '../arraybuffers/arraybuffers';
 import * as rc4 from './rc4';
 
-describe('rc4 transformer', function() {
+describe('rc4 transformer', () => {
   let transformer: rc4.Rc4Transformer;
 
-  beforeEach(function() {
+  beforeEach(() => {
     transformer = new rc4.Rc4Transformer();
   });
 
-  it('simple transform/restore', function() {
+  it('simple transform/restore', () => {
     const p = new Uint8Array([0, 1, 2]);
 
     const transformedFragments = transformer.transform(p);

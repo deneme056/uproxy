@@ -21,10 +21,9 @@ export function socksEchoTestDescription(useChurn:boolean) {
   var testerFactoryManager
         :freedom.FreedomModuleFactoryManager<ProxyIntegrationTester>;
   var testModule :ProxyIntegrationTester;
-  var createTestModule = function(denyLocalhost?:boolean, sessionLimit?:number,
-                                  ipv6Only?:boolean, reproxy?:boolean)
-                                  : ProxyIntegrationTester {
-        return testerFactoryManager(denyLocalhost, useChurn, sessionLimit, ipv6Only, reproxy);
+  var createTestModule = (denyLocalhost?:boolean, sessionLimit?:number,
+                          ipv6Only?:boolean, reproxy?:boolean) => {
+    return testerFactoryManager(denyLocalhost, useChurn, sessionLimit, ipv6Only, reproxy);
   };
 
   beforeEach((done) => {

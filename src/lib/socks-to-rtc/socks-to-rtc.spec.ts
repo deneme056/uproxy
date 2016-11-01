@@ -39,14 +39,14 @@ var voidPromise = Promise.resolve();
 // for chaining purposes.
 var noopPromise = new Promise<void>((F, R) => {});
 
-describe('SOCKS server', function() {
+describe('SOCKS server', () => {
   var server :socks_to_rtc.SocksToRtc;
   var onceServerStopped :() => Promise<void>;
 
   var mockTcpServer :tcp.Server;
   var mockPeerConnection :peerconnection.PeerConnection<signals.Message>;
 
-  beforeEach(function() {
+  beforeEach(() => {
     server = new socks_to_rtc.SocksToRtc();
     onceServerStopped = () => { return server.onceStopped; };
 
@@ -146,7 +146,7 @@ describe('SOCKS server', function() {
   });
 });
 
-describe('SOCKS session', function() {
+describe('SOCKS session', () => {
   var session :socks_to_rtc.Session;
 
   var mockBytesReceived :handler.Queue<number,void>;
@@ -155,7 +155,7 @@ describe('SOCKS session', function() {
   var mockDataFromPeerQueue :handler.Queue<peerconnection.Data,void>;
   var mockTcpConnection :tcp.Connection;
 
-  beforeEach(function() {
+  beforeEach(() => {
     session = new socks_to_rtc.Session();
 
     mockTcpConnection = jasmine.createSpyObj('tcp connection', [

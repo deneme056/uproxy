@@ -1,15 +1,15 @@
 import * as candidate from './candidate';
 import Candidate = candidate.Candidate;
 
-describe('extractEndpointFromCandidateLine', function() {
+describe('extractEndpointFromCandidateLine', () => {
   it('garbage test', () => {
-    expect(function() {
+    expect(() => {
       Candidate.fromRTCIceCandidate({candidate: 'abc def'});
     }).toThrow();
   });
 
   it('reject invalid port numbers', () => {
-    expect(function() {
+    expect(() => {
       Candidate.fromRTCIceCandidate({
         candidate: 'candidate:9097 1 udp 4175 xxx yyy typ host generation 0'
       });

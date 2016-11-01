@@ -45,7 +45,7 @@ var noMoreCandidatesSignal: peerconnection_types.Message = {
 // Static helpers.
 ////////
 
-describe('isTerminatingSignal', function() {
+describe('isTerminatingSignal', () => {
   it('ignores messages without signals', () => {
     expect(bridge.isTerminatingSignal({
       errorOnLastMessage: true
@@ -139,7 +139,7 @@ describe('isTerminatingSignal', function() {
   });
 });
 
-describe('makeSingleProviderMessage', function() {
+describe('makeSingleProviderMessage', () => {
   it('basic', () => {
     var signals = [
       {
@@ -161,7 +161,7 @@ describe('makeSingleProviderMessage', function() {
   });
 });
 
-describe('pickBestProviderType', function() {
+describe('pickBestProviderType', () => {
   it('basic', () => {
     var plainSignals :Object[] = [
       {
@@ -193,11 +193,11 @@ describe('pickBestProviderType', function() {
 // The class itself.
 ////////
 
-describe('BridgingPeerConnection', function() {
+describe('BridgingPeerConnection', () => {
   var mockProvider :peerconnection.PeerConnection<peerconnection_types.Message>;
   var mockProviderSignalQueue = new handler.Queue<peerconnection_types.Message, void>();
 
-  beforeEach(function() {
+  beforeEach(() => {
     mockProvider = <any>{
       peerOpenedChannelQueue: new handler.Queue<datachannel.DataChannel, void>(),
       signalForPeerQueue: mockProviderSignalQueue,

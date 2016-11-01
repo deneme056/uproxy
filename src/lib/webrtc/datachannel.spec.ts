@@ -8,10 +8,10 @@ freedom = freedomMocker.makeMockFreedomInModuleEnv({
 
 import * as datachannel from './datachannel';
 
-describe('DataChannel', function() {
+describe('DataChannel', () => {
   var mockRtcDataChannel :MockFreedomRtcDataChannel;
 
-  beforeEach(function() {
+  beforeEach(() => {
     mockRtcDataChannel = new MockFreedomRtcDataChannel();
   });
 

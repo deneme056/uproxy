@@ -6,7 +6,7 @@ import * as peerconnection from '../webrtc/peerconnection';
 import * as handler from '../handler/queue';
 import Pool from './pool';
 
-describe('pool', function() {
+describe('pool', () => {
   var mockPeerConnection :peerconnection.PeerConnection<Object>;
   var pool :Pool;
   var mockDataChannels :peerconnection.DataChannel[];
@@ -23,7 +23,7 @@ describe('pool', function() {
     };
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     mockDataChannels = [];
 
     mockPeerConnection = <any>{

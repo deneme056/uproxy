@@ -1,25 +1,25 @@
 import * as queue from './queue';
 import Queue = queue.Queue;
 
-describe('Base Queue', function() {
+describe('Base Queue', () => {
   var queue :Queue<string>;
 
   beforeEach(() => {
     queue = new Queue<string>();
   });
 
-  it('New queue has length = 0', function() {
+  it('New queue has length = 0', () => {
     expect(queue.length).toBe(0);
   });
 
-  it('3 items makes length = 3', function() {
+  it('3 items makes length = 3', () => {
     queue.push('A');
     queue.push('BB');
     queue.push('CCC');
     expect(queue.length).toBe(3);
   });
 
-  it('3 items and then clearing makes length = 0', function() {
+  it('3 items and then clearing makes length = 0', () => {
     queue.push('A');
     queue.push('BB');
     queue.push('CCC');
@@ -29,7 +29,7 @@ describe('Base Queue', function() {
     expect(queue.length).toBe(0);
   });
 
-  it('3 items come out in order', function() {
+  it('3 items come out in order', () => {
     queue.push('A');
     queue.push('BBB');
     queue.push('CCCCC');

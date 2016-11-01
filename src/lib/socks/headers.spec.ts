@@ -1,14 +1,14 @@
 import * as Socks from './headers';
 
 // TODO: add tests for IPv6 address parsing
-describe('socks', function() {
+describe('socks', () => {
   // A valid SOCKS5/IPV4 request.
   var ipv4RequestArray :Uint8Array;
 
   // A valid SOCKS5/UDP request.
   var udpMessageArray :Uint8Array;
 
-  beforeEach(function() {
+  beforeEach(() => {
     ipv4RequestArray = new Uint8Array([
       Socks.Version.VERSION5,
       Socks.Command.TCP_CONNECT,
@@ -193,14 +193,14 @@ describe('socks', function() {
 
   it('wrong socks version', () => {
     ipv4RequestArray[0] = 4;
-    expect(function() {
+    expect(() => {
       Socks.interpretRequest(ipv4RequestArray);
     }).toThrow();
   });
 
   it('unsupported command', () => {
     ipv4RequestArray[1] = Socks.Command.TCP_BIND;
-    expect(function() {
+    expect(() => {
       Socks.interpretRequest(ipv4RequestArray);
     }).toThrow();
   });

@@ -4,7 +4,7 @@ freedom = freedomMocker.makeMockFreedomInModuleEnv();
 
 import * as tcp from './tcp';
 
-describe('Tcp', function() {
+describe('Tcp', () => {
   it('conversion of a connected endpoint info', () => {
     var input :freedom.TcpSocket.SocketInfo = {
       localAddress: '127.0.0.1',

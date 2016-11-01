@@ -46,13 +46,13 @@ var mockConnectionInfo :tcp.ConnectionInfo = {
 // for chaining purposes.
 var noopPromise = new Promise<any>((F, R) => {});
 
-describe('RtcToNet', function() {
+describe('RtcToNet', () => {
   var server :rtc_to_net.RtcToNet;
 
   var mockPeerconnection
       :peerconnection.PeerConnection<signals.Message>;
 
-  beforeEach(function() {
+  beforeEach(() => {
     server = new rtc_to_net.RtcToNet();
 
     mockPeerconnection = <any>{
@@ -100,7 +100,7 @@ describe('RtcToNet', function() {
   });
 });
 
-describe('RtcToNet session', function() {
+describe('RtcToNet session', () => {
   var session :rtc_to_net.Session;
 
   var mockTcpConnection :tcp.Connection;
@@ -110,7 +110,7 @@ describe('RtcToNet session', function() {
   var mockBytesSent :handler.Queue<number,void>;
   var mockUpdates :handler.Queue<rtc_to_net.Status,void>;
 
-  beforeEach(function() {
+  beforeEach(() => {
     mockTcpConnection = jasmine.createSpyObj('tcp connection', [
         'onceConnected',
         'onceClosed',

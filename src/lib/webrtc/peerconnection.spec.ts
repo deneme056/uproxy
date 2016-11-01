@@ -11,11 +11,11 @@ import * as signals from './signals';
 import * as peerconnection from './peerconnection';
 import * as datachannel from './datachannel';
 
-describe('PeerConnection', function() {
+describe('PeerConnection', () => {
   var mockRtcPeerConnection :MockFreedomRtcPeerConnection;
   var mockRtcDataChannel :MockFreedomRtcDataChannel;
 
-  beforeEach(function() {
+  beforeEach(() => {
     mockRtcPeerConnection = new MockFreedomRtcPeerConnection();
     mockRtcDataChannel = new MockFreedomRtcDataChannel();
     freedom = freedomMocker.makeMockFreedomInModuleEnv({
@@ -133,7 +133,7 @@ describe('PeerConnection', function() {
   });
 });
 
-describe('extractMaxChannelsFromSdp_', function() {
+describe('extractMaxChannelsFromSdp_', () => {
   it('simple example', () => {
       expect(peerconnection.PeerConnectionClass.extractMaxChannelsFromSdp_(
           'a=sctpmap:5000 webrtc-datachannel 256')).toEqual(256);

@@ -4,10 +4,10 @@ freedom = freedomMocker.makeMockFreedomInModuleEnv();
 
 import * as caesar from './caesar';
 
-describe('caesar cipher', function() {
+describe('caesar cipher', () => {
   var transformer :caesar.CaesarCipher;
 
-  beforeEach(function() {
+  beforeEach(() => {
     transformer = new caesar.CaesarCipher();
   });
 
@@ -17,27 +17,27 @@ describe('caesar cipher', function() {
     }));
   }
 
-  it('transform', function() {
+  it('transform', () => {
     setKey(4);
     expect(transformer.transformByte(0)).toEqual(4);
   });
 
-  it('transform with wrap-around', function() {
+  it('transform with wrap-around', () => {
     setKey(4);
     expect(transformer.transformByte(254)).toEqual(2);
   });
 
-  it('restore', function() {
+  it('restore', () => {
     setKey(1);
     expect(transformer.restoreByte(10)).toEqual(9);
   });
 
-  it('restore with wrap-around', function() {
+  it('restore with wrap-around', () => {
     setKey(7);
     expect(transformer.restoreByte(2)).toEqual(251);
   });
 
-  it('transform buffer', function() {
+  it('transform buffer', () => {
     setKey(1);
     var bytes = new Uint8Array([4, 1, 255]);
     var result = new Uint8Array(transformer.transform(bytes.buffer)[0]);
@@ -47,7 +47,7 @@ describe('caesar cipher', function() {
     expect(result[2]).toEqual(0);
   });
 
-  it('restore buffer', function() {
+  it('restore buffer', () => {
     var input = new Uint8Array([4, 1, 255]);
 
     setKey(1);

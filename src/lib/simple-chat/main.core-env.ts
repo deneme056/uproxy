@@ -12,12 +12,12 @@ var stopButton = document.getElementById('stopButton');
 declare var loadModule: () => Promise<freedom.OnAndEmit<any, any>>;
 
 loadModule().then((chat:freedom.OnAndEmit<any,any>) => {
-  chat.on('ready', function() {
+  chat.on('ready', () => {
     sendAreaA.disabled = false;
     sendAreaB.disabled = false;
   });
 
-  chat.on('error', function() {
+  chat.on('error', () => {
     sendAreaA.disabled = true;
     sendAreaB.disabled = true;
   });

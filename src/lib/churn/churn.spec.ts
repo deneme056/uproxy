@@ -8,7 +8,7 @@ import * as net from '../net/net.types';
 import * as candidate from './candidate';
 import Candidate = candidate.Candidate;
 
-describe('filterCandidatesFromSdp', function() {
+describe('filterCandidatesFromSdp', () => {
   it('with candidates', () => {
     var sdp = 'o=- 3055156452807570418 3 IN IP4 127.0.0.1\n' +
               'a=group:BUNDLE audio data\n' +
@@ -25,7 +25,7 @@ describe('filterCandidatesFromSdp', function() {
 });
 
 
-describe('selectBestPublicAddress', function() {
+describe('selectBestPublicAddress', () => {
   var srflxEndpoint :net.Endpoint = {
     address: '172.26.108.25',
     port: 40762
@@ -63,7 +63,7 @@ describe('selectBestPublicAddress', function() {
   });
 
   it('reject relay candidates', () => {
-    expect(function() {
+    expect(() => {
       churn.selectBestPublicAddress([relayCandidate]);
     }).toThrow();
   });

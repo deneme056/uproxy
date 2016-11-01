@@ -11,8 +11,7 @@ declare const freedom: freedom.FreedomInCoreEnv;
 function slowTestDescription(useChurn:boolean) {
   var testerFactoryManager
         :freedom.FreedomModuleFactoryManager<ProxyIntegrationTester>;
-  var createTestModule = function(denyLocalhost?:boolean)
-      :ProxyIntegrationTester {
+  var createTestModule = (denyLocalhost?:boolean) => {
     return testerFactoryManager(denyLocalhost, useChurn);
   };
 
@@ -127,10 +126,10 @@ function slowTestDescription(useChurn:boolean) {
   });
 }
 
-describe('slow integration tests', function() {
+describe('slow integration tests', () => {
   slowTestDescription(false);
 });
 
-describe('slow integration tests with churn', function() {
+describe('slow integration tests with churn', () => {
   slowTestDescription(true);
 });

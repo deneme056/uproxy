@@ -1,6 +1,6 @@
 import * as counter from './counter';
 
-describe('socket call counter', function() {
+describe('socket call counter', () => {
   // One wrapped call, then destroy.
   it('simple wrap', (done) => {
     var destroyCalled = false;

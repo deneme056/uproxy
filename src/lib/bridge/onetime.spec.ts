@@ -9,7 +9,7 @@ interface Clown {
   name:string;
 };
 
-describe('signal batcher', function() {
+describe('signal batcher', () => {
   var m1 :Clown = {
     name: 'bozo'
   };

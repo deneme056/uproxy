@@ -18,7 +18,7 @@ class NumberSumAggregator implements Aggregate.Aggregator<number,string> {
   }
 }
 
-describe('Handler Queue', function() {
+describe('Handler Queue', () => {
   var queue :Queue<string, number>;
   var ncallbacks :number;
   function lenHandler(s:string) : number { return s.length; };
@@ -33,18 +33,18 @@ describe('Handler Queue', function() {
     ncallbacks = 0;
   });
 
-  it('New queue has no events (length = 0)', function() {
+  it('New queue has no events (length = 0)', () => {
     expect(queue.getLength()).toBe(0);
   });
 
-  it('3 events makes length = 3', function() {
+  it('3 events makes length = 3', () => {
     queue.handle('A');
     queue.handle('BB');
     queue.handle('CCC');
     expect(queue.getLength()).toBe(3);
   });
 
-  it('3 events and then clearing makes length = 0', function() {
+  it('3 events and then clearing makes length = 0', () => {
     queue.handle('A').catch(() => {});
     queue.handle('BB').catch(() => {});
     queue.handle('CCC').catch(() => {});
@@ -52,8 +52,7 @@ describe('Handler Queue', function() {
     expect(queue.getLength()).toBe(0);
   });
 
-  it('setSyncNextHandler then handle 2 events: leaves second event queued',
-      function(done) {
+  it('setSyncNextHandler then handle 2 events: leaves second event queued', (done) => {
     var p1 = queue.setSyncNextHandler(lenHandler).then((n) => {
         expect(queue.isHandling()).toBe(false);
         expect(n).toBe(1);
@@ -75,8 +74,7 @@ describe('Handler Queue', function() {
     });
   });
 
-  it('setNextHandler then handle 2 events: leaves second event queued',
-      function(done) {
+  it('setNextHandler then handle 2 events: leaves second event queued', (done) => {
     queue.setNextHandler(promiseLenHandler).then((s) => {
       expect(queue.isHandling()).toBe(false);
       expect(s).toBe(1);
@@ -88,8 +86,7 @@ describe('Handler Queue', function() {
     queue.handle('BB');
   });
 
-  it('3 events then setSyncNextHandler leaves 2 events and handles first',
-      function(done) {
+  it('3 events then setSyncNextHandler leaves 2 events and handles first', (done) => {
     queue.handle('A');
     queue.handle('BB');
     queue.handle('CCC');
@@ -100,8 +97,7 @@ describe('Handler Queue', function() {
     });
   });
 
-  it('3 events then setSyncNextHandler to remove elements in order until empty',
-      function(done) {
+  it('3 events then setSyncNextHandler to remove elements in order until empty', (done) => {
     queue.handle('A');
     queue.handle('BBB');
     queue.setSyncNextHandler(lenHandler)
@@ -134,7 +130,7 @@ describe('Handler Queue', function() {
         })
   });
 
-  it('successive setSyncHandler', function(done) {
+  it('successive setSyncHandler', (done) => {
     queue.handle('A');
     queue.setSyncNextHandler((s:string) => {
       expect(s).toEqual('A');
@@ -151,7 +147,7 @@ describe('Handler Queue', function() {
   });
 });  // describe('Handler Queue', ... )
 
-describe('Aggregated Handler Queue', function() {
+describe('Aggregated Handler Queue', () => {
   var queue :Queue<number, string>;
   var aggregateTo10Handler :Aggregate.AggregateHandler<number,string>;
   var ncallbacks :number;
@@ -166,8 +162,7 @@ describe('Aggregated Handler Queue', function() {
     ncallbacks = 0;
   });
 
-  it('Basic aggregateTo10Handler & first two handle results',
-      function(done) {
+  it('Basic aggregateTo10Handler & first two handle results', (done) => {
     // Note that the return value for all the first three elements is the same
     // because we are using the aggregated handler. The aggregation concludes
     // only when we get over the specified min value (MIN_AGGREGATION_VALUE),
